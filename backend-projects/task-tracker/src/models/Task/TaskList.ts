@@ -1,6 +1,7 @@
 import { Task } from "./Task";
 import fs from "fs";
 import path from "path";
+import { TaskStatus } from "./types";
 
 const dataFilePath = path.join(__dirname, "../../data/tasks.json");
 
@@ -30,17 +31,22 @@ export class TaskList {
   }
 
   removeTask(id: string) {
-    this.tasks.filter((task) => task.id !== id);
+    this.tasks = this.tasks.filter((task) => task.id !== id);
     this.saveTasks();
   }
 
   updateTask(id: string, updatedFields: Partial<Task>) {
-    this.tasks.map((task) =>
-      task.id === id ? { ...task, ...updatedFields } : task
+    this.tasks = this.tasks.map((task) =>
+      task.id === id
+        ? { ...task, ...updatedFields, updatedAt: new Date() }
+        : task
     );
     this.saveTasks();
   }
-  listTasks() {
-    return this.tasks;
+  listTasks(status?: TaskStatus | null) {
+    if (!status) {
+      return this.tasks;
+    }
+    return this.tasks.filter((task) => task.status === status);
   }
 }

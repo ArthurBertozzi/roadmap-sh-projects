@@ -1,12 +1,12 @@
 import { TaskModel, TaskStatus } from "./types";
 
 export class Task implements TaskModel {
-  id!: string; // ! indica ao typescript que a propriedade será inicializada no construtor
+  id?: string; // ! indicates to typescript that the property will be initialized in the constructor
   title!: string;
   description!: string;
-  status!: TaskStatus;
-  createdAt!: Date;
-  updatedAt!: Date;
+  status?: TaskStatus;
+  createdAt?: Date;
+  updatedAt?: Date;
 
   constructor({
     id,
@@ -25,6 +25,4 @@ export class Task implements TaskModel {
       updatedAt,
     });
   }
-
-  createTask() {}
 }
