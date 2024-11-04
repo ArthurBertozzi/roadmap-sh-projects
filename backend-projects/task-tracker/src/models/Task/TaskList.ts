@@ -1,31 +1,36 @@
-import { Task } from "./Task";
+import { TaskModel, TaskStatus } from "./types";
 import fs from "fs";
 import path from "path";
-import { TaskStatus } from "./types";
-
-const dataFilePath = path.join(__dirname, "../../data/tasks.json");
 
 export class TaskList {
-  private tasks: Task[] = [];
+  private tasks: TaskModel[] = [];
+  private dataFilePath: string;
 
-  constructor() {
+  constructor(filePath?: string) {
+    this.dataFilePath =
+      filePath || path.join(__dirname, "../../data/tasks.json");
     this.loadTasks();
   }
 
   private loadTasks() {
-    if (fs.existsSync(dataFilePath)) {
-      const data = fs.readFileSync(dataFilePath, "utf-8");
-      this.tasks = JSON.parse(data);
+    if (fs.existsSync(this.dataFilePath)) {
+      const data = fs.readFileSync(this.dataFilePath, "utf-8");
+      this.tasks = JSON.parse(data, (key, value) => {
+        if (key === "createdAt" || key === "updatedAt") {
+          return new Date(value);
+        }
+        return value;
+      });
     } else {
-      this.saveTasks(); // Create file if don't exist
+      this.saveTasks();
     }
   }
 
   private saveTasks() {
-    fs.writeFileSync(dataFilePath, JSON.stringify(this.tasks, null, 2));
+    fs.writeFileSync(this.dataFilePath, JSON.stringify(this.tasks, null, 2));
   }
 
-  addTask(task: Task) {
+  addTask(task: TaskModel) {
     this.tasks.push(task);
     this.saveTasks();
   }
@@ -35,7 +40,7 @@ export class TaskList {
     this.saveTasks();
   }
 
-  updateTask(id: string, updatedFields: Partial<Task>) {
+  updateTask(id: string, updatedFields: Partial<TaskModel>) {
     this.tasks = this.tasks.map((task) =>
       task.id === id
         ? { ...task, ...updatedFields, updatedAt: new Date() }
@@ -43,6 +48,7 @@ export class TaskList {
     );
     this.saveTasks();
   }
+
   listTasks(status?: TaskStatus | null) {
     if (!status) {
       return this.tasks;

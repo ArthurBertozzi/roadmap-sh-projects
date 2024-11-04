@@ -5,7 +5,7 @@ import { Task } from "./models/Task/Task";
 import { v4 as uuidv4 } from "uuid";
 import { TaskStatus } from "./models/Task/types";
 
-async function showInitialMenu(taskList: TaskList) {
+export async function showInitialMenu(taskList: TaskList, isTesting = false) {
   try {
     console.log(terminalDialog["helloMsg"]);
 
@@ -14,16 +14,16 @@ async function showInitialMenu(taskList: TaskList) {
 
     switch (initialOption.toString()) {
       case "1":
-        await showListMenu(taskList);
+        await showListMenu(taskList, isTesting);
         break;
       case "2":
-        await createNewTaskMenu(taskList);
+        await createNewTaskMenu(taskList, isTesting);
         break;
       case "3":
-        await updateTaskMenu(taskList);
+        await updateTaskMenu(taskList, isTesting);
         break;
       case "4":
-        await deleteTaskMenu(taskList);
+        await deleteTaskMenu(taskList, isTesting);
         break;
       default:
         console.log(terminalDialog["lastMessage"]);
@@ -31,13 +31,17 @@ async function showInitialMenu(taskList: TaskList) {
         return;
     }
 
-    await showInitialMenu(taskList);
+    if (!isTesting) {
+      await showInitialMenu(taskList);
+    }
   } catch (error) {
-    await showInitialMenu(taskList);
+    if (!isTesting) {
+      await showInitialMenu(taskList);
+    }
   }
 }
 
-async function createNewTaskMenu(taskList: TaskList) {
+export async function createNewTaskMenu(taskList: TaskList, isTesting = false) {
   const title = await askQuestion("Name the title of your task.\n");
   const description = await askQuestion("Create a description for you task.\n");
   const newTask = new Task({
@@ -46,10 +50,12 @@ async function createNewTaskMenu(taskList: TaskList) {
     description,
   });
   taskList.addTask(newTask);
-  await showInitialMenu(taskList);
+  if (!isTesting) {
+    await showInitialMenu(taskList);
+  }
 }
 
-async function updateTaskMenu(taskList: TaskList) {
+export async function updateTaskMenu(taskList: TaskList, isTesting = false) {
   let status: TaskStatus;
   const updateOption = await askQuestion(terminalDialog["updateTaskOption"]);
   const taskId = await askQuestion("What's your task id?\n");
@@ -79,18 +85,22 @@ async function updateTaskMenu(taskList: TaskList) {
       break;
   }
 
-  await showInitialMenu(taskList);
+  if (!isTesting) {
+    await showInitialMenu(taskList);
+  }
 }
 
-async function deleteTaskMenu(taskList: TaskList) {
+export async function deleteTaskMenu(taskList: TaskList, isTesting = false) {
   const id = await askQuestion(
     "Write the task id that you would like to delete.\n"
   );
   taskList.removeTask(id);
-  await showInitialMenu(taskList);
+  if (!isTesting) {
+    await showInitialMenu(taskList);
+  }
 }
 
-async function showListMenu(taskList: TaskList) {
+export async function showListMenu(taskList: TaskList, isTesting = false) {
   const listOption = await askQuestion(terminalDialog["listMenu"]);
   console.log("\n");
 
@@ -115,6 +125,10 @@ async function showListMenu(taskList: TaskList) {
       console.log(terminalDialog["listMessage"]);
       console.log(taskList.listTasks());
       break;
+  }
+
+  if (!isTesting) {
+    await showInitialMenu(taskList);
   }
 }
 
