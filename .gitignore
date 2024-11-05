@@ -72,3 +72,6 @@
 **/.env
 **/.env.*
 
+# Figma files
+**/*.fig
+
