@@ -31,10 +31,7 @@
 **/*.sw?
 **/*.orig
 
-# Dependency directories and lock files
-**/package-lock.json
-**/yarn.lock
-**/pnpm-lock.yaml
+
 
 # TypeScript
 **/*.tsbuildinfo

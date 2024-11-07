@@ -1,0 +1,42 @@
+[
+  {
+    "id": "b6d7d266-2a2c-4f7f-8d7c-c6f1ee36a802",
+    "description": "teste",
+    "amount": "R$ 30",
+    "category": "Other",
+    "createdAt": "2024-11-06T18:51:46.317Z",
+    "updatedAt": "2024-11-06T18:51:46.317Z"
+  },
+  {
+    "id": "7b98ae22-1db0-4ee1-b22b-51ebd9bc1687",
+    "description": "teste2",
+    "amount": "R$ 57.29",
+    "category": "Other",
+    "createdAt": "2024-11-06T18:52:06.906Z",
+    "updatedAt": "2024-11-06T18:52:06.906Z"
+  },
+  {
+    "id": "7e9ffd8f-8a34-4a94-8e75-85e111c963da",
+    "description": "teste2",
+    "amount": "R$ 26.10",
+    "category": "Other",
+    "createdAt": "2024-11-06T18:54:08.796Z",
+    "updatedAt": "2024-11-06T18:54:08.796Z"
+  },
+  {
+    "id": "3a90fc76-abb6-4fb4-95d9-7b75ccc61530",
+    "description": "teste2",
+    "amount": "R$ 26.10",
+    "category": "Other",
+    "createdAt": "2024-11-06T18:55:16.699Z",
+    "updatedAt": "2024-11-06T18:55:16.699Z"
+  },
+  {
+    "id": "5be58805-c34b-4695-872b-a77da56f1ae9",
+    "description": "teste2",
+    "amount": "R$ 26.10",
+    "category": "Food",
+    "createdAt": "2024-11-06T18:56:04.711Z",
+    "updatedAt": "2024-11-06T18:56:04.712Z"
+  }
+]
